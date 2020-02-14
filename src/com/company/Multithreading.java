@@ -36,39 +36,40 @@ public class Multithreading {
     }
 
 
-
     private static void fillArray(float a[]) {
         for (int i = 0; i < a.length; i++)
             a[i] = 1;
     }
 
 
-    private static void method1(float a[]) {
+    public static synchronized void method1(float a[]) {
+
         for (int i = 0; i < a.length; i++)
             a[i] = (float) (a[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
 
         try {
-            Thread.sleep(1 / 100);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static void method2a(float a[], int g) {
 
-        for (int i = 0; i < a.length; i++) {
-            a[i] = (float) (a[i] * Math.sin(0.2f + (i + h) / 5) * Math.cos(0.2f + (i + h) / 5)
-                    * Math.cos(0.4f + (i + h) / 2));
+        private static synchronized void method2a(float a[], int g){
 
+            for (int i = 0; i < a.length; i++) {
+                a[i] = (float) (a[i] * Math.sin(0.2f + (i + h) / 5) * Math.cos(0.2f + (i + h) / 5)
+                        * Math.cos(0.4f + (i + h) / 2));
+
+            }
+            try {
+                Thread.sleep(1 / 100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            Thread.sleep(1 / 100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
-        private static void method2 ( float a[]){
+        private static void method2(float a[]){
 
             float[] a1 = new float[h];
             float[] a2 = new float[h];
@@ -78,8 +79,8 @@ public class Multithreading {
             System.out.println("a1 before " + Arrays.toString(a1));
             System.out.println("a2 before " + Arrays.toString(a2));
 
-            new Thread(() -> Multithreading.method2a(a1, 0)).start();
-            new Thread(() -> Multithreading.method2a(a2, h)).start();
+            new Thread(() -> method2a(a1, 0)).start();
+            new Thread(() -> method2a(a2, h)).start();
 
 
             System.out.println("a1 after " + Arrays.toString(a1));
@@ -98,4 +99,5 @@ public class Multithreading {
         }
 
     }
+
 
