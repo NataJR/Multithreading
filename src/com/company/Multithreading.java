@@ -68,8 +68,11 @@ public class Multithreading {
                 e.printStackTrace();
             }
         }
-
-        private static void method2(float a[]){
+       
+    //очевидно, что я что-то сделала не так, но я не понимаю и не вижу разницу при использовании Thread.sleep
+    
+    
+    private static void method2(float a[]){
 
             float[] a1 = new float[h];
             float[] a2 = new float[h];
